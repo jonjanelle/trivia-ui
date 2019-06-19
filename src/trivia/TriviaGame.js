@@ -1,10 +1,12 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import Question from './Question';
 import TriviaService from './TriviaService';
+import GameHeader from './GameHeader';
+
 import './trivia-game.css'
 require('../StringExtensions');
 
-class TriviaGame extends PureComponent {
+class TriviaGame extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -60,7 +62,7 @@ class TriviaGame extends PureComponent {
       return this.state.gameQuestions[this.state.currentQuestion];
     } else {
       // Game summary / play again / return to title screen
-      return (<div>Game Over</div>);
+      return (<div>Game Over!</div>);
     }
   }
 
@@ -74,29 +76,6 @@ class TriviaGame extends PureComponent {
     });
   }
 
-  getHeader() {
-    return (
-      <div className="header">
-        <div className="flex-container">
-          <div className="flex-item text-left">
-            Score: {this.state.score}
-          </div>
-          <div className="flex-item text-right">
-            Correct: {this.state.nCorrect}&nbsp;&nbsp;
-            Incorrect: {this.state.nIncorrect}
-          </div>
-        </div>
-        <div className="flex-container">
-          <div className="flex-item">
-            <h2>
-              Question {this.state.currentQuestion + 1}  
-            </h2>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   getFeedBackBar() {
     return (<div>{this.state.feedbackMessage}</div>);
   }
@@ -105,7 +84,12 @@ class TriviaGame extends PureComponent {
     return (
       
       <div className="game-container">
-        {this.getHeader()}
+        <GameHeader
+          currentQuestion={this.state.currentQuestion + 1}
+          nIncorrect={this.state.nIncorrect}
+          nCorrect={this.state.nCorrect}
+          score={this.state.score}>
+        </GameHeader>
         {this.getQuestionState()}
         {this.getFeedBackBar()}
       </div>

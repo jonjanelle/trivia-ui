@@ -1,3 +1,10 @@
+:root {
+    --main-shadow-color: rgba(200,200,200,0.5);
+    --green: rgba(149, 218, 140, 0.9);
+    --background-black: #333;
+    --border-blue: skyblue;
+}
+
 .flex-container {
     display: flex;
     justify-content: space-between;
@@ -17,4 +24,18 @@
 
 .text-left {
     text-align: left;
+}
+
+.green {
+    color: yellowgreen;
+}
+
+.red {
+    color: crimson;
+}
+
+.label {
+    font-weight: 500;
+    font-size: 1.25rem;
+    margin-right: 1rem;
 }

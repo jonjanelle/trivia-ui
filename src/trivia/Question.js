@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types';
+import FaStopwatch from "react-icons/fa";
 import './question.css'
+
 
 class Question extends PureComponent {
   
@@ -61,12 +63,23 @@ class Question extends PureComponent {
     return answers;
   }
 
+  getDifficultyIcon() {
+    return (
+      <span>{this.props.difficulty}</span>
+    );
+  }
 
   render() {
     return (
       <div className="question-container">
-        <div className="question-card" dangerouslySetInnerHTML={{ __html: this.props.question}}></div>
-        <div><em><strong>Category: </strong>{this.props.category}</em></div>
+        <div className="question-card">
+          <div className="question-card-content">
+            <div dangerouslySetInnerHTML={{ __html: this.props.question}}></div>
+            <div className="question-category">
+              <em>{this.props.category} ({this.getDifficultyIcon()})</em>
+            </div>
+          </div>
+        </div>
         <div>{this.getAnswerOptions()}</div>
       </div>
     );
