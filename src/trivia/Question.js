@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types';
-import FaStopwatch from "react-icons/fa";
+import QuestionChoice from './QuestionChoice';
+// import FaStopwatch from "react-icons/fa";
 import './question.css'
 
-
 class Question extends PureComponent {
-  
   static propTypes = {
       question: PropTypes.string.isRequired,
       category: PropTypes.string.isRequired,
@@ -17,11 +16,32 @@ class Question extends PureComponent {
 
   constructor(props) {
     super(props);
+    this.state = {
+      answerOptions: this.buildAnswerOptions(),
+      feedbackMessage: ""
+    }
     this.checkResponse = this.checkResponse.bind(this);
   }
 
   checkResponse(value) {
-    this.props.updateScore(value === this.props.correct_answer.trim());
+    let isCorrect = value === this.props.correct_answer.trim();
+    this.setState({feedbackMessage: isCorrect ? 'Correct!' : 'Incorrect'});
+    this.revealAnswer(value);
+    setTimeout(() => {
+      this.setState({feedbackMessage: ''});
+      this.props.updateScore(isCorrect);
+    }, 2000);
+
+  }
+
+  revealAnswer(value) {
+    const newAnswerOptions = this.state.answerOptions.map(ao => {
+      if (ao.text === value || ao.isCorrect)
+        ao.isBlinking = true;
+      return ao;
+    });
+    
+    this.setState({answerOptions: newAnswerOptions});
   }
     
   //Durstenfeld shuffle
@@ -34,33 +54,44 @@ class Question extends PureComponent {
     }
   }
 
-  getAnswerOptions() {
+  buildAnswerOptions() {
     let count = 0;
     let answers = this.props.incorrect_answers.map(ia => {
       count += 1;
       ia = ia.trim();
+      
       if (ia.search(/^'.*'$/) >= 0)  {
         ia = ia.substring(1, ia.length - 1);
       }
-      return (
-        <div key={`incorrect-${count}`} 
-             className="answer-pane" 
-             onClick={() => this.checkResponse(ia)}
-             dangerouslySetInnerHTML={{ __html: ia}}>      
-        </div>
-      );
+
+      return ({
+        isCorrect: false,
+        onClick: this.checkResponse,
+        isBlinking: false,
+        text: ia,
+        key: `incorrect-${count}`});
     });
     
-    answers.push(
-      <div key="correct" 
-           className="answer-pane" 
-           onClick={() => this.checkResponse(this.props.correct_answer)}
-           dangerouslySetInnerHTML={{ __html: this.props.correct_answer}}>
-      </div>
-    );
+    answers.push({
+      isCorrect: true,
+      onClick: this.checkResponse,
+      isBlinking: false,
+      text: this.props.correct_answer,
+      key: 'correct'});
 
     this.shuffleArray(answers);
     return answers;
+  }
+
+  getQuestionChoices() {
+    return this.state.answerOptions.map(ao => 
+      <QuestionChoice key={ao.key} 
+        isCorrect={ao.isCorrect}
+        isBlinking={ao.isBlinking}
+        text={ao.text}
+        onClick={this.checkResponse}>
+      </QuestionChoice>
+    );
   }
 
   getDifficultyIcon() {
@@ -80,7 +111,8 @@ class Question extends PureComponent {
             </div>
           </div>
         </div>
-        <div>{this.getAnswerOptions()}</div>
+        <div>{this.getQuestionChoices()}</div>
+        <div className="feedback-message">{this.state.feedbackMessage}</div>
       </div>
     );
   }

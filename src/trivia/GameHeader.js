@@ -8,12 +8,11 @@ import './gameheader.css'
 //PureComponent assumes that a component will always produce the same output for a particular
 //set of inputs (is a function). More efficient as possible
 class GameHeader extends PureComponent {
-  
   static propTypes = {
-      nCorrect: PropTypes.string.isRequired,
-      nIncorrect: PropTypes.string.isRequired,
-      score: PropTypes.string.isRequired,
-      currentQuestion: PropTypes.string.isRequired,
+      nCorrect: PropTypes.number.isRequired,
+      nIncorrect: PropTypes.number.isRequired,
+      score: PropTypes.number.isRequired,
+      currentQuestion: PropTypes.number.isRequired,
   };
 
   render() {
@@ -35,11 +34,9 @@ class GameHeader extends PureComponent {
             </div>
             </div>
             <div className="flex-container">
-            <div className="flex-item">
-                <h2>
-                Question {this.props.currentQuestion}  
-                </h2>
-            </div>
+                <div className="flex-item">
+                    <h2>Question {this.props.currentQuestion}</h2>
+                </div>
             </div>
         </div>    
     );
