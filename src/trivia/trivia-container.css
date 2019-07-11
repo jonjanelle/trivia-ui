@@ -1,0 +1,27 @@
+@font-face {
+    font-family: Budmo;
+    src: url('../fonts/budmo.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Doodleton;
+    src: url('../fonts/doodletoon.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Mraker;
+    src: url('../fonts/mraker.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: ComicAndy;
+    src: url('../fonts/comicandy.ttf');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,10 +1,3 @@
-@font-face {
-    font-family: Budmo;
-    src: url('../fonts/budmo.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .question-card-content {
     flex: 1 1 auto;
 }
@@ -17,13 +10,13 @@
     border-bottom: 2px solid var(--border-blue);
     border-left: 8px solid var(--border-blue);
     border-right: 8px solid var(--border-blue);
-    width: 60%;
+    width: 70%;
     height: auto;
     margin: 0 auto;
     padding: 16px 8px;
     margin-top: 32px;
     margin-bottom: 32px;
-    border-radius: 4px;
+    border-radius: 16px;
     cursor: pointer;
     transition-property: background-color, box-shadow, font-size;
     transition-duration:  0.25s;
@@ -31,9 +24,12 @@
 
 .answer-pane:hover {
     background-color: var(--green);
+    color: white;
     box-shadow: 0px 0px 10px 0px var(--main-shadow-color);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     overflow: hidden;
+    font-weight: 500;
+    animation: 1s wiggle ease infinite;
 }
 
 .yellow {
@@ -42,12 +38,13 @@
 
 .question-card {
     margin-bottom: 24px;
-    padding: 16px 24px;
-    font-size: 2rem;
+    padding: 24px;
+    font-size: 2.25rem;
     font-weight: 500;
     background-color: darkblue;
     color: white;
-    border: 2px inset lightgrey;
+    border-top: 2px inset lightgrey;
+    border-bottom: 2px inset lightgrey;
     box-shadow: 0px 0px 5px 0px var(--main-shadow-color);
     min-height: 4rem;
     display: flex;
@@ -71,4 +68,17 @@
     font-family: 'Budmo';
     letter-spacing: 2px;
     font-size: 3.5rem;
+}
+
+@keyframes wiggle {
+	0% {
+        border-radius: 10px 3px 10px 3px;
+        transform: rotate(-0.5deg);
+	} 50% {
+        border-radius: 3px 10px 3px 10px;
+        transform: rotate(0.5deg);
+	} 100% {
+        border-radius: 10px 3px 10px 3px;
+        transform: rotate(-0.5deg);
+    }
 }

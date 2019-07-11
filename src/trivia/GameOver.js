@@ -7,15 +7,10 @@ import { FaCheck } from "react-icons/fa";
 class GameOver extends PureComponent {
   static propTypes = {
       nCorrect: PropTypes.number.isRequired,
-      totalQuestions: PropTypes.number.isRequired,
-      score: PropTypes.number.isRequired
+      totalQuestions: PropTypes.number.isRequired
   };
 
-
-  getMessage() {
-    
-  }
-
+  getMessage() { }
 
   render() {
     return (

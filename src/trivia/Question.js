@@ -18,9 +18,36 @@ class Question extends PureComponent {
     super(props);
     this.state = {
       answerOptions: this.buildAnswerOptions(),
-      feedbackMessage: ""
+      feedbackMessage: "",
+      timer: 10,
+      timesUp: false
+
     }
     this.checkResponse = this.checkResponse.bind(this);
+  }
+
+  componentDidMount() {
+    this.startTimer();
+  }
+
+  startTimer() {
+    let timer = setInterval(() => {
+      if (this.state.timer === 1) {
+        clearInterval(timer);
+        this.showTimesUp();
+      } else {
+        this.setState({
+          timer: this.state.timer - 1
+        });
+      }
+    }, 1000);
+  }
+
+  showTimesUp() {
+    this.setState({timesUp: true, timer: 0});
+    setTimeout(() => {
+      this.checkResponse(null);
+    }, 200);
   }
 
   checkResponse(value) {
@@ -28,7 +55,11 @@ class Question extends PureComponent {
     this.setState({feedbackMessage: isCorrect ? 'Correct!' : 'Incorrect'});
     this.revealAnswer(value);
     setTimeout(() => {
-      this.setState({feedbackMessage: ''});
+      this.setState({
+        feedbackMessage: '',
+        timer: 10,
+        timesUp: false
+      });
       this.props.updateScore(isCorrect);
     }, 2000);
 
@@ -103,6 +134,7 @@ class Question extends PureComponent {
   render() {
     return (
       <div className="question-container">
+        {this.state.timer}
         <div className="question-card">
           <div className="question-card-content">
             <div dangerouslySetInnerHTML={{ __html: this.props.question}}></div>
